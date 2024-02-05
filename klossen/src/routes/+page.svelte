@@ -18,9 +18,11 @@
 			</picture>
 		</span>
 
-		to Klossen<br />an application to buy and sell products
+		to Klossen<br />
 	</h1>
-
+	<p>
+		This is a place to buy and sell products online. Head over to <a href="/klossen">here</a> to get started
+	</p>
 	<Counter />
 </section>
 

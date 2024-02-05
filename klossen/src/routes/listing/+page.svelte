@@ -25,7 +25,7 @@
 
 <div class="text-column">
 	<h1>KLOSSEN</h1>
-	<a href="/create">Create a listing</a>
+	<a href="create">Create a listing</a>
 	<div id="listingsBox">
 		{#each listings as listing}
 			<Product>
