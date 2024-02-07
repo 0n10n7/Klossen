@@ -1,16 +1,26 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import { getAuth, signOut } from 'firebase/auth';
+	import { database } from '/src/firebase.js';
+
+	const auth = getAuth();
+
+	function signout() {
+		signOut(auth)
+			.then(() => {
+				// Sign-out successful.
+				console.log('logged out');
+			})
+			.catch((error) => {
+				// An error happened.
+			});
+	}
 </script>
 
 <header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
-
+	<div class="corner"></div>
+		
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
@@ -20,14 +30,13 @@
 				<a href="/">Home</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/klossen' ? 'page' : undefined}>
-				<a href="/klossen">klossen</a>
+				<a href="/klossen">Klossen</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
+			<li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
+				<a href="/login">Login</a>
 			</li>
-			
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
+			<li>
+				<button on:click={signout}>log out</button>
 			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
@@ -36,7 +45,7 @@
 	</nav>
 
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
+		<a href="https://github.com/0n10n7?tab=repositories">
 			<img src={github} alt="GitHub" />
 		</a>
 	</div>
@@ -113,7 +122,8 @@
 		border-top: var(--size) solid var(--color-theme-1);
 	}
 
-	nav a {
+	nav a,
+	button {
 		display: flex;
 		height: 100%;
 		align-items: center;
@@ -126,8 +136,32 @@
 		text-decoration: none;
 		transition: color 0.2s linear;
 	}
-
-	a:hover {
+	button {
+		border-style:solid;
+		border-radius: 1vh;
+		background: rgb(31, 31, 31);
+		background: linear-gradient(
+			90deg,
+			rgba(31, 31, 50, 1) 0%,
+			rgba(37, 31, 37, 1) 30%,
+			rgba(31, 31, 31, 1) 50%,
+			rgba(37, 31, 37, 1) 70%,
+			rgba(50, 31, 31, 1) 100%
+		);
+	}
+	a:hover,
+	button:hover{
 		color: var(--color-theme-1);
+	}
+	button:hover {
+		background: rgb(40, 40, 40);
+		background: linear-gradient(
+			180deg,
+			rgba(40, 40,65, 1) 0%,
+			rgba(48, 40, 48, 1) 30%,
+			rgba(40, 40, 40, 1) 50%,
+			rgba(48, 40, 48, 1) 70%,
+			rgba(65, 40, 40, 1) 100%
+		);
 	}
 </style>
