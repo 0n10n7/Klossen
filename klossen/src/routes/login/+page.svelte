@@ -1,10 +1,15 @@
 <script>
 	import { collection, getDocs } from 'firebase/firestore';
-	import { getAuth, signInWithEmailAndPassword, doc, setDoc } from 'firebase/auth';
+	import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 	import { database } from '/src/firebase.js';
+	import { getContext } from 'svelte';
+	import { goto } from '$app/navigation';
 
-	const auth = getAuth();
- 
+	// Retrieve auth store from context
+	const Auth = getContext('auth');
+	let auth;
+	Auth.subscribe((val) => (auth = val));
+
 	let email;
 	let password;
 	async function login() {
@@ -12,14 +17,11 @@
 			.then((userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				console.log(user);
-				setDoc(doc(database, 'users', user.uid), {
-					email: user.email,
-					listings: []
-				});
+				console.log(auth.currentUser);
 				console.log(
 					`logged in account ${email} ${password[0]}${password[1]}${password[2]}${new Array(password.length - 3).fill('*').join('')}`
 				);
+				goto("/klossen");
 			})
 			.catch((error) => {
 				const errorCode = error.code;

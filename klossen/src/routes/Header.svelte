@@ -3,24 +3,35 @@
 	import github from '$lib/images/github.svg';
 	import { getAuth, signOut } from 'firebase/auth';
 	import { database } from '/src/firebase.js';
+	import { getContext } from 'svelte';
 
-	const auth = getAuth();
+	// Retrieve auth store from context
+	const Auth = getContext('auth');
+	let auth;
+	Auth.subscribe(val => auth = val);
 
 	function signout() {
+		console.log(auth)
 		signOut(auth)
 			.then(() => {
 				// Sign-out successful.
 				console.log('logged out');
+				window.location.reload();
 			})
 			.catch((error) => {
 				// An error happened.
 			});
 	}
+
 </script>
 
 <header>
-	<div class="corner"></div>
-		
+	{#if auth.currentUser !=null}
+		<div class="corner">{auth.currentUser.email}</div>
+	{:else}
+		<div class="corner">not logged in</div>
+	{/if}
+
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
@@ -137,7 +148,7 @@
 		transition: color 0.2s linear;
 	}
 	button {
-		border-style:solid;
+		border-style: solid;
 		border-radius: 1vh;
 		background: rgb(31, 31, 31);
 		background: linear-gradient(
@@ -150,14 +161,14 @@
 		);
 	}
 	a:hover,
-	button:hover{
+	button:hover {
 		color: var(--color-theme-1);
 	}
 	button:hover {
 		background: rgb(40, 40, 40);
 		background: linear-gradient(
 			180deg,
-			rgba(40, 40,65, 1) 0%,
+			rgba(40, 40, 65, 1) 0%,
 			rgba(48, 40, 48, 1) 30%,
 			rgba(40, 40, 40, 1) 50%,
 			rgba(48, 40, 48, 1) 70%,

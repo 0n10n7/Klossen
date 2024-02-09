@@ -1,6 +1,15 @@
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
+	import { setContext } from 'svelte';
+	import { get, writable } from 'svelte/store';
+	import { getAuth } from 'firebase/auth';
+	const auth = writable();
+	auth.subscribe(val => console.log(val));
+	
+	auth.set(getAuth());
+	setContext('auth', auth);
+	
 </script>
 
 <div class="app">
