@@ -38,8 +38,8 @@
 <div class="text-column">
 	<a href="/signup">If you don't have an acount</a>
 	<form on:submit={login}>
-		<input type="email" bind:value={email} />
-		<input type="password" bind:value={password} />
+		<input type="email" placeholder="example@email.com" bind:value={email} />
+		<input type="password" placeholder="password" bind:value={password} />
 		<button type="submit">Login</button>
 	</form>
 </div>

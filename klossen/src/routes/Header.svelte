@@ -11,7 +11,6 @@
 	Auth.subscribe(val => auth = val);
 
 	function signout() {
-		console.log(auth)
 		signOut(auth)
 			.then(() => {
 				// Sign-out successful.
@@ -29,7 +28,7 @@
 	{#if auth.currentUser !=null}
 		<div class="corner">{auth.currentUser.email}</div>
 	{:else}
-		<div class="corner">not logged in</div>
+		<div class="corner">not logged in </div>
 	{/if}
 
 	<nav>
